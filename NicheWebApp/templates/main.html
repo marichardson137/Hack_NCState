@@ -11,13 +11,23 @@
   </head>
 
   <body>
-    {% include 'navbar.html' %} {% comment %} {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-      <li>{{ message }}</li>
+    {% include 'navbar.html' %} {% if cards %}
+    <div class="card-container">
+      {% for card in cards %}
+      <div class="card">
+        <img src="{{ card.image.url }}" alt="{{ card.title }}" />
+        <div class="card-content">
+          <h3>{{ card.title }}</h3>
+          <!-- You can also display tags if needed -->
+          {% for tag in card.tags.all %}
+          <span class="tag">{{ tag.name }}</span>
+          {% endfor %}
+          <p>{{ card.body }}</p>
+        </div>
+      </div>
       {% endfor %}
-    </ul>
-    {% endif %} {% endcomment %} {% block content %} {% endblock %}
+    </div>
+    {% endif %} {% block content %} {% endblock %}
     <script src="{% static 'js/script.js' %}"></script>
   </body>
 </html>

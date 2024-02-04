@@ -1,43 +1,54 @@
-{% extends 'main.html' %} {% block content %}
-
-{% include 'navbar.html'%}
-
-<div class="scene">
-    {% if cards %}
-    {% for card in cards %}
+{% extends 'main.html' %} {% block content %} {% include 'navbar.html'%}
+<div class="card-container">
+    {% if card %}
+    <div class="scene">
     <div class="card">
-      <div class="card__face card__face--front">
-        <img id="profile-image" src="{{ card.image.url }}" alt="{{ card.title }}" />
+        <div class="card__face card__face--front">
+        <img
+            id="profile-image"
+            src="{{ card.image.url }}"
+            alt="{{ card.title }}"
+        />
         <div id="profile-info">
             <div id="profile-name">{{ card.title }}</div>
             <div id="profile-age">@{{ card.creator }}</div>
             <div id="tags">
-                {% for tag in card.tags.all %}
-                    <span class="tag">{{tag}}</span>
-                {% endfor %}
+            {% for tag in card.tags.all %}
+            <span class="tag">{{tag}}</span>
+            {% endfor %}
             </div>
         </div>
         <div id="buttons">
             <button class="button" id="save-button">Save</button>
-            <button class="button" id="next-button">Next</button>
+            <button class="button" id="next-button" onclick="showNextCard()">Next</button>
         </div>
-
-      </div>
-      <div class="card__face card__face--back">
-        <p>
-            {{ card.body }}
-        </p>
-      </div>
+        </div>
+        <div class="card__face card__face--back">
+        <p>{{ card.body }}</p>
+        </div>
     </div>
-    {% endfor %}
+    </div>
     {% endif %}
-  </div>
-</html>
 
+    </p>
+        DEBUG - {{ card_count }}: cards in database
+    <p>
+
+</div>
 <script>
-    var card = document.querySelector('.card');
-    card.addEventListener( 'click', function() {
-    card.classList.toggle('is-flipped');
+    var cards = document.querySelectorAll(".card");
+    var currentCardIndex = 0;
+
+    function showNextCard() {
+      cards[currentCardIndex].classList.remove("is-flipped");
+      currentCardIndex = (currentCardIndex + 1) % cards.length;
+      cards[currentCardIndex].classList.add("is-flipped");
+    }
+
+    cards.forEach(function (card) {
+      card.addEventListener("click", function () {
+        card.classList.toggle("is-flipped");
+      });
     });
 </script>
 

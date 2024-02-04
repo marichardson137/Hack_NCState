@@ -23,12 +23,26 @@ def registerPage(request):
     return
 
 
+def createPage(request):
+    return
+
+
+def savesPage(request):
+    return
+
+
+def profilePage(request):
+    return
+
+
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
     cards = Card.objects.all().order_by('-created')
     card_count = cards.count()
 
-    context = {'cards': cards, 'card_count': card_count}
+    card = Card.objects.all().order_by('?').first()
+
+    context = {'card': card, 'card_count': card_count}
 
     return render(request, 'base/home.html', context)

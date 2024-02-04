@@ -12,6 +12,7 @@ class Tag(models.Model):
 
 
 class Card(models.Model):
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=255, default=None)
     image = models.ImageField(upload_to='images/', default=None)
     tags = models.ManyToManyField(Tag, related_name="tags", blank=True)
